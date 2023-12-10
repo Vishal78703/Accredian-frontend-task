@@ -48,7 +48,7 @@ const SignupForm = ({ onSwitchToLogin, onSignup }) => {
   return (
     <form onSubmit={handleSignupSubmit} style={{ width: '100%', marginTop: 16 }}>
       <TextField
-        variant="outlined"
+        variant="outlined" 
         margin="normal"
         fullWidth
         id="username"

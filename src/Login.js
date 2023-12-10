@@ -4,6 +4,8 @@ import axios from 'axios';
 
 const LoginForm = ({ onSwitchToSignup, onLogin }) => {
   const [loginData, setLoginData] = useState({ usernameOrEmail: '', password: '' });
+  const [loginStatus, setLoginStatus] = useState({ success: false, message: '' });
+
 
   const handleLoginChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -19,10 +21,14 @@ const LoginForm = ({ onSwitchToSignup, onLogin }) => {
 
       // Handle the successful login
       console.log('Login successful:', response.data);
+      // Update login status
+      setLoginStatus({ success: true, message: 'Login successful' });
       onLogin();
     } catch (error) {
       // Handle login error
       console.error('Login failed:', error.response.data.error);
+      // Update login status for error
+      setLoginStatus({ success: false, message: 'Invalid credentials' });
     }
   };
 
@@ -44,7 +50,7 @@ const LoginForm = ({ onSwitchToSignup, onLogin }) => {
         margin="normal"
         fullWidth
         id="password"
-        label="Password"
+        label="Password" 
         name="password"
         type="password"
         onChange={handleLoginChange}
@@ -54,6 +60,14 @@ const LoginForm = ({ onSwitchToSignup, onLogin }) => {
       <Button type="submit" variant="contained" color="primary" fullWidth>
         Login
       </Button>
+      
+      {loginStatus.message && (
+
+        <div style={{ marginTop: 16, color: loginStatus.success ? 'green' : 'red' }}>
+          {loginStatus.message}
+        </div>
+    )}
+
       <Grid container justifyContent="flex-end" style={{ marginTop: 16 }}>
         <Grid item>
           <Link component="button" variant="body2" onClick={onSwitchToSignup}>
